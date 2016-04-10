@@ -13,8 +13,8 @@ import android.widget.LinearLayout
  */
 class SplashActivity : AppCompatActivity() {
 
-    private var logo: ImageView = null!!
-    private var container: LinearLayout = null!!
+    private var logo: ImageView? = null
+    private var container: LinearLayout? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +30,6 @@ class SplashActivity : AppCompatActivity() {
             .setInterpolator(DecelerateInterpolator(1.2f))
             .start()
 
-        container.visibility = View.GONE;
+        container?.visibility = View.GONE;
     }
 }
