@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.raymond.randomexercise.example;
+package com.raymond.randomexercise.example.photo;
 
 import android.animation.ObjectAnimator;
 import android.animation.TimeInterpolator;
@@ -26,6 +26,7 @@ import android.graphics.ColorMatrixColorFilter;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateInterpolator;
@@ -278,5 +279,26 @@ public class PictureDetailsActivity extends Activity {
         
         // override transitions to skip the standard window animations
         overridePendingTransition(0, 0);
+    }
+
+    private static class ImageDragListener implements View.OnTouchListener {
+
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            int action = event.getAction();
+
+            switch (action) {
+                case MotionEvent.ACTION_DOWN:
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    break;
+                case MotionEvent.ACTION_UP:
+                    break;
+                case MotionEvent.ACTION_CANCEL:
+                    break;
+            }
+
+            return false;
+        }
     }
 }

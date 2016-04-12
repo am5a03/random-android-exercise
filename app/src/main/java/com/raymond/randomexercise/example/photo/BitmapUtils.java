@@ -14,17 +14,14 @@
  * limitations under the License.
  */
 
-package com.raymond.randomexercise.example;
+package com.raymond.randomexercise.example.photo;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.widget.ImageView;
 
 import com.raymond.randomexercise.R;
 

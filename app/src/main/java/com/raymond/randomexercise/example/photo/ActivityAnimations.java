@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.raymond.randomexercise.example;
+package com.raymond.randomexercise.example.photo;
 
 import java.util.ArrayList;
 import java.util.HashMap;
