@@ -3,4 +3,7 @@
     <item
         android:id="@+id/item_1"
         android:title="ActivityAnimations"/>
+    <item
+        android:id="@+id/item_2"
+        android:title="ParticleAnimation"/>
 </menu>

@@ -12,6 +12,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewPropertyAnimator;
 
+import com.raymond.randomexercise.example.particle.*;
 import com.raymond.randomexercise.example.photo.ActivityAnimations;
 
 /**
@@ -42,6 +43,9 @@ public class AnimActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.item_1:
                 startActivity(new Intent(this, ActivityAnimations.class));
+                return true;
+            case R.id.item_2:
+                startActivity(new Intent(this, com.raymond.randomexercise.example.particle.MainActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

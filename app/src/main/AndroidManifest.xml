@@ -28,7 +28,7 @@
             android:theme="@style/Transparent" >
         </activity>
 
-
+        <activity android:name=".example.particle.MainActivity"/>
 
     </application>
 
