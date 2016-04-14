@@ -6,4 +6,7 @@
     <item
         android:id="@+id/item_2"
         android:title="ParticleAnimation"/>
+    <item
+        android:id="@+id/item_3"
+        android:title="PostListActivity"/>
 </menu>

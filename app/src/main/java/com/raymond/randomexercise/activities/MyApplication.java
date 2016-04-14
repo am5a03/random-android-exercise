@@ -1,4 +1,4 @@
-package com.raymond.randomexercise;
+package com.raymond.randomexercise.activities;
 
 import android.app.Application;
 import android.support.v7.app.AppCompatDelegate;

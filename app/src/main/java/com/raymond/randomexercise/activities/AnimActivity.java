@@ -1,4 +1,4 @@
-package com.raymond.randomexercise;
+package com.raymond.randomexercise.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +12,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewPropertyAnimator;
 
+import com.raymond.randomexercise.R;
 import com.raymond.randomexercise.example.particle.*;
 import com.raymond.randomexercise.example.photo.ActivityAnimations;
 
@@ -46,6 +47,9 @@ public class AnimActivity extends AppCompatActivity {
                 return true;
             case R.id.item_2:
                 startActivity(new Intent(this, com.raymond.randomexercise.example.particle.MainActivity.class));
+                return true;
+            case R.id.item_3:
+                startActivity(new Intent(this, PostListActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

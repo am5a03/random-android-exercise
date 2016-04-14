@@ -1,4 +1,4 @@
-package com.raymond.randomexercise
+package com.raymond.randomexercise.activities
 
 import android.os.Bundle
 import android.support.v4.view.ViewCompat
@@ -7,6 +7,7 @@ import android.view.View
 import android.view.animation.DecelerateInterpolator
 import android.widget.ImageView
 import android.widget.LinearLayout
+import com.raymond.randomexercise.R
 
 /**
  * Created by Raymond on 2016-03-07.
