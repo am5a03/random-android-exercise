@@ -19,6 +19,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Observable;
 import rx.functions.Action1;
 import rx.functions.Func1;
+import rx.subjects.PublishSubject;
+import rx.subjects.Subject;
 
 /**
  * Created by Raymond on 2016-04-14.
@@ -28,6 +30,7 @@ public class ApiServiceManager {
     private Gson gson;
     private PostService postService;
 
+    private PublishSubject<String> nextPageSubject = PublishSubject.create();
     private DBPostRepository repository;
 
     public ApiServiceManager(DBPostRepository repository) {
@@ -45,6 +48,39 @@ public class ApiServiceManager {
 
         this.repository = repository;
     }
+
+
+    public Observable<ArrayList<PostItem>> getPostList(String section, String page, PublishSubject<String> pagerSubject) {
+        return postService.getPostListResponse(section, page)
+                .doOnNext(apiResponse -> {
+                    Log.d(TAG, "getPostList: " + pagerSubject);
+                    pagerSubject.onNext(apiResponse.paging.next);
+                    String savedResp = gson.toJson(apiResponse);
+                    // Check whether
+                    repository.savePostList(section, page, savedResp);
+
+                })
+                .doOnNext(response -> nextPageSubject.onNext(response.paging.next))
+                .map(apiResponse -> apiResponse.data)
+                .map(apiPostArray -> {
+                    ArrayList<PostItem> items = new ArrayList<>();
+                    for (int i = 0; i < apiPostArray.length; i++) {
+                        ApiResponse.ApiData apiData = apiPostArray[i];
+                        PostItem item = new PostItem();
+                        item.caption = apiData.caption;
+                        item.imageUrl = apiData.images.large;
+                        item.voteCounts = apiData.votes.count;
+                        item.commentCounts = apiData.comments.count;
+                        items.add(item);
+                    }
+                    return items;
+                })
+                .onErrorResumeNext(throwable -> {
+                    Log.e(TAG, "getPostList: ", throwable);
+                    return repository.getPostList(section, page, false, pagerSubject);
+                });
+    }
+
 
     public Observable<PostItem> getPostListItem(String section, String page) {
 
