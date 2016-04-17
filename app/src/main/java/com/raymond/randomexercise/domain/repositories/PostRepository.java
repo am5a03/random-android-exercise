@@ -22,7 +22,7 @@ import rx.subjects.Subject;
  * Created by Raymond on 2016-04-14.
  */
 public class PostRepository {
-    private PublishSubject<String> nextPageSubj = PublishSubject.create();
+
     private ApiServiceManager manager;
     private DBPostRepository dbPostRepository;
 

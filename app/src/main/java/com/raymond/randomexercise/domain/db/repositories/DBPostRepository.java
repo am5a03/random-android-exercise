@@ -61,7 +61,9 @@ public class DBPostRepository {
         return Observable.just(response)
                 .doOnNext(response1 -> {
                     Log.d(TAG, "getPostList: ");
-                    pagerSubject.onNext(response1.paging.next);
+                    if (pagerSubject != null) {
+                        pagerSubject.onNext(response1.paging.next);
+                    }
                 })
                 .map(apiResponse -> apiResponse.data)
                 .map(apiPostArray -> {

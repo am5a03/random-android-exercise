@@ -26,6 +26,8 @@ import java.util.concurrent.TimeUnit;
 import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 import rx.subjects.PublishSubject;
 import rx.subscriptions.CompositeSubscription;
@@ -66,17 +68,26 @@ public class PostListActivity extends AppCompatActivity {
         recyclerView.setAdapter(postListAdapter);
 
 
-        pagerListener = new RecyclerViewPagerListener(postItemList, recyclerView, postRepository);
+        SwipeRefreshLayout srl = (SwipeRefreshLayout) findViewById(R.id.srl);
+        pagerListener = new RecyclerViewPagerListener(postItemList, recyclerView, srl, postRepository);
         pagerListener.init();
         recyclerView.addOnScrollListener(pagerListener);
 
-        SwipeRefreshLayout srl = (SwipeRefreshLayout) findViewById(R.id.srl);
-        srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-
-            }
+        assert srl != null;
+        srl.setOnRefreshListener(() -> {
+            postRepository.getPostList("hot", "", true, null)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io())
+                    .subscribe(postItems -> {
+                        postItemList.clear();
+                        for (PostItem postItem : postItems) {
+                            postItemList.add(postItem);
+                        }
+                        postListAdapter.notifyDataSetChanged();
+                        srl.setRefreshing(false);
+                    });
         });
+
     }
 
     @Override
@@ -145,14 +156,19 @@ public class PostListActivity extends AppCompatActivity {
         private PostRepository postRepository;
         private List list;
         private RecyclerView view;
+        private SwipeRefreshLayout srl;
 
         private CompositeSubscription subscription;
 
-        private RecyclerViewPagerListener(List list, RecyclerView view, PostRepository repository) {
+        private RecyclerViewPagerListener(List list,
+                                          RecyclerView view,
+                                          SwipeRefreshLayout srl,
+                                          PostRepository repository) {
             this.list = list;
             this.postRepository = repository;
             this.view = view;
             this.nextPage = "";
+            this.srl = srl;
             subscription = new CompositeSubscription();
         }
 
@@ -169,6 +185,7 @@ public class PostListActivity extends AppCompatActivity {
                     .subscribe(postItem -> {
                         list.add(postItem);
                         view.getAdapter().notifyItemInserted(list.size() + 1);
+                        srl.setRefreshing(false);
                     }));
         }
 
@@ -192,6 +209,7 @@ public class PostListActivity extends AppCompatActivity {
                         .subscribe(postItem -> {
                             list.add(postItem);
                             recyclerView.getAdapter().notifyItemInserted(list.size() + 1);
+                            srl.setRefreshing(false);
                         }));
             }
         }

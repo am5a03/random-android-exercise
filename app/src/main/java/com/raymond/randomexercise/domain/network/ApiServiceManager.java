@@ -54,7 +54,9 @@ public class ApiServiceManager {
         return postService.getPostListResponse(section, page)
                 .doOnNext(apiResponse -> {
                     Log.d(TAG, "getPostList: " + pagerSubject);
-                    pagerSubject.onNext(apiResponse.paging.next);
+                    if (pagerSubject != null) {
+                        pagerSubject.onNext(apiResponse.paging.next);
+                    }
                     String savedResp = gson.toJson(apiResponse);
                     // Check whether
                     repository.savePostList(section, page, savedResp);
