@@ -35,6 +35,7 @@ ext {
     rxjavaVersion = "1.1.0"
     retrofitVersion = "2.0.1"
     okHtttpVersion = "3.2.0"
+    glideVersion = "3.7.0"
 }
 
 dependencies {
@@ -57,6 +58,8 @@ dependencies {
 
     //OkHttp
     compile "com.squareup.okhttp3:okhttp:${okHtttpVersion}"
+
+    compile "com.github.bumptech.glide:glide:${glideVersion}"
 }
 buildscript {
     ext.kotlin_version = '1.0.0'

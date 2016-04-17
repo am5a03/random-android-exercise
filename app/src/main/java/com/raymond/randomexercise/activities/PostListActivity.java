@@ -10,9 +10,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.raymond.randomexercise.R;
 import com.raymond.randomexercise.domain.db.model.PostItem;
 import com.raymond.randomexercise.domain.db.repositories.DBPostRepository;
@@ -126,7 +128,14 @@ public class PostListActivity extends AppCompatActivity {
                 PostViewHolder pv = (PostViewHolder) holder;
                 PostItem item = postItems.get(position);
                 pv.caption.setText(item.caption);
-                pv.image.setText(item.imageUrl);
+//                pv.image.setText(item.imageUrl);
+
+                Glide.with(holder.itemView.getContext())
+                        .load(item.imageUrl)
+                        .centerCrop()
+                        .crossFade()
+                        .into(((PostViewHolder) holder).image);
+
                 pv.voteCount.setText(String.valueOf(item.voteCounts));
             }
         }
@@ -159,6 +168,9 @@ public class PostListActivity extends AppCompatActivity {
         private SwipeRefreshLayout srl;
 
         private CompositeSubscription subscription;
+
+        private boolean loading = true;
+        int pastVisiblesItems, visibleItemCount, totalItemCount;
 
         private RecyclerViewPagerListener(List list,
                                           RecyclerView view,
@@ -199,22 +211,32 @@ public class PostListActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-            LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
-            int first = manager.findFirstVisibleItemPosition();
-            int last = manager.findLastVisibleItemPosition();
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+            if(dy > 0) {//check for scroll down{
+                visibleItemCount = recyclerView.getLayoutManager().getChildCount();
+                totalItemCount = recyclerView.getLayoutManager().getItemCount();
+                pastVisiblesItems = ((LinearLayoutManager)recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
 
-            if (last + 3 >= list.size()) {
-                subscription.add(postRepository.getPostList("hot", nextPage, false, pagerSubject)
-                        .debounce(1500, TimeUnit.MILLISECONDS)
-                        .flatMap(Observable::from)
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribeOn(Schedulers.io())
-                        .subscribe(postItem -> {
-                            list.add(postItem);
-                            recyclerView.getAdapter().notifyItemInserted(list.size() + 1);
-                            srl.setRefreshing(false);
-                        }));
+                if (loading) {
+                    if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                        // FIXME: 2016-04-17  Need a more elegant solution with RxJava like subscribing to the scrolling event
+                        loading = false;
+                        Log.v("...", "Last Item Wow !");
+                        //Do pagination.. i.e. fetch new data
+                        postRepository.getPostList("hot", nextPage, false, pagerSubject)
+                                .debounce(1500, TimeUnit.MILLISECONDS)
+                                .flatMap(Observable::from)
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribeOn(Schedulers.io())
+                                .subscribe(postItem -> {
+                                    list.add(postItem);
+                                    recyclerView.getAdapter().notifyItemInserted(list.size() + 1);
+                                    srl.setRefreshing(false);
+                                    loading = true;
+                                });
+                    }
+                }
             }
         }
     }
@@ -232,13 +254,13 @@ public class PostListActivity extends AppCompatActivity {
     private static class PostViewHolder extends RecyclerView.ViewHolder {
 
         public TextView caption;
-        public TextView image;
+        public ImageView image;
         public TextView voteCount;
 
         public PostViewHolder(View itemView) {
             super(itemView);
             caption = (TextView) itemView.findViewById(R.id.caption);
-            image = (TextView) itemView.findViewById(R.id.image);
+            image = (ImageView) itemView.findViewById(R.id.image);
             voteCount = (TextView) itemView.findViewById(R.id.voteCount);
         }
     }
