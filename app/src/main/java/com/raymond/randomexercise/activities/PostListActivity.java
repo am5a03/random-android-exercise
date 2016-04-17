@@ -222,10 +222,8 @@ public class PostListActivity extends AppCompatActivity {
                     if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
                         // FIXME: 2016-04-17  Need a more elegant solution with RxJava like subscribing to the scrolling event
                         loading = false;
-                        Log.v("...", "Last Item Wow !");
-                        //Do pagination.. i.e. fetch new data
+
                         postRepository.getPostList("hot", nextPage, false, pagerSubject)
-                                .debounce(1500, TimeUnit.MILLISECONDS)
                                 .flatMap(Observable::from)
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribeOn(Schedulers.io())
