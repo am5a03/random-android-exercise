@@ -75,7 +75,7 @@ public class PostListActivity extends AppCompatActivity {
 
         assert srl != null;
         srl.setOnRefreshListener(() -> {
-            postRepository.getPostList("hot", "", true, null)
+            postRepository.getPostList("hot", "", true, pagerListener.getPagerSubject())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
                     .subscribe(postItems -> {
@@ -192,6 +192,10 @@ public class PostListActivity extends AppCompatActivity {
         public void destroy() {
             //
             subscription.unsubscribe();
+        }
+
+        public PublishSubject<String> getPagerSubject() {
+            return pagerSubject;
         }
 
         @Override
