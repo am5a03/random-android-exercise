@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,18 +26,47 @@ public class ScrollingImageFragment extends Fragment {
 
     ScrollingImageRecyclerView recyclerView;
 
+    Runnable scroll = new Runnable() {
+        @Override
+        public void run() {
+            recyclerView.smoothScrollBy(0, 100);
+            recyclerView.postDelayed(this, 50);
+        }
+    };
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_scrolling_image, container, false);
 
+        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView = (ScrollingImageRecyclerView) v.findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(getImageAdapter());
 
+        recyclerView.setHasFixedSize(true);
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                boolean end = linearLayoutManager.findFirstVisibleItemPosition() + linearLayoutManager.getChildCount() >= 1000;
+                Log.d("ScrollingImageFragment", "onScrolled: " + end);
+                if (end) {
+                    linearLayoutManager.scrollToPosition(0);
+                }
+            }
+        });
+
+
+        recyclerView.post(scroll);
 
         return v;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        recyclerView.removeCallbacks(scroll);
     }
 
     private ImageAdapter getImageAdapter() {
