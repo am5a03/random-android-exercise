@@ -9,4 +9,7 @@
     <item
         android:id="@+id/item_3"
         android:title="PostListActivity"/>
+    <item
+        android:id="@+id/item_4"
+        android:title="MainActivity"/>
 </menu>

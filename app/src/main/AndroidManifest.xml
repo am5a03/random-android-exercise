@@ -32,6 +32,7 @@
 
         <activity android:name=".example.particle.MainActivity"/>
         <activity android:name=".activities.PostListActivity"/>
+        <activity android:name=".activities.MainActivity"/>
     </application>
 
 </manifest>

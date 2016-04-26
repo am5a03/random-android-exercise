@@ -51,6 +51,9 @@ public class AnimActivity extends AppCompatActivity {
             case R.id.item_3:
                 startActivity(new Intent(this, PostListActivity.class));
                 return true;
+            case R.id.item_4:
+                startActivity(new Intent(this, MainActivity.class));
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

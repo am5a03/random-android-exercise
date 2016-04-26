@@ -35,6 +35,7 @@ public class ScrollingImageFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(getImageAdapter());
 
+
         return v;
     }
 
@@ -86,7 +87,7 @@ public class ScrollingImageFragment extends Fragment {
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
             ImageViewHolder vh = (ImageViewHolder) holder;
             int loc;
-            if (position > size) {
+            if (position >= size) {
                 loc = position % size;
             } else {
                 loc = position;
@@ -94,7 +95,7 @@ public class ScrollingImageFragment extends Fragment {
 
             ImageHolder imageHolder = imageRes.get(loc);
             ViewGroup.LayoutParams params = vh.simpleDraweeView.getLayoutParams();
-            params.height = imageHolder.height;
+            params.height = imageHolder.height * 2;
             vh.simpleDraweeView.setLayoutParams(params);
             vh.simpleDraweeView.setImageURI(Uri.parse(imageHolder.path));
         }
