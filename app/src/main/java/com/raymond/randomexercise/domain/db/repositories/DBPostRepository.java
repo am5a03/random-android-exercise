@@ -53,7 +53,10 @@ public class DBPostRepository {
     };
 
     public Observable<ArrayList<PostItem>> getPostList(String section, String page, boolean remote, PublishSubject pagerSubject) {
+        long ts = System.currentTimeMillis();
         String cachedResp = sharedPreferences.getString(formatListKey(section, page), null);
+        Log.d(TAG, "getPostList: diff=" + (System.currentTimeMillis() - ts));
+
         ApiResponse response = gson.fromJson(cachedResp, ApiResponse.class);
 
         if (response == null || remote) return Observable.never();

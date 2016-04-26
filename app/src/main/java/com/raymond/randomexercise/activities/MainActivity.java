@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.raymond.randomexercise.R;
+import com.raymond.randomexercise.fragments.ScrollingImageFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -62,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             switch (position) {
                 case TAB_1:
-                    return new Fragment();
+                    return new ScrollingImageFragment();
                 case TAB_2:
                     return new Fragment();
                 case TAB_3:

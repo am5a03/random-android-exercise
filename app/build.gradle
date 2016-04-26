@@ -36,6 +36,8 @@ ext {
     retrofitVersion = "2.0.1"
     okHtttpVersion = "3.2.0"
     glideVersion = "3.7.0"
+    aspectjVersion = "1.8.6"
+    frescoVersion = "0.10.0"
 }
 
 dependencies {
@@ -60,6 +62,10 @@ dependencies {
     compile "com.squareup.okhttp3:okhttp:${okHtttpVersion}"
 
     compile "com.github.bumptech.glide:glide:${glideVersion}"
+    compile "com.facebook.fresco:fresco:${frescoVersion}"
+
+    // AspectJ
+    compile "org.aspectj:aspectjrt:${aspectjVersion}"
 }
 buildscript {
     ext.kotlin_version = '1.0.0'
