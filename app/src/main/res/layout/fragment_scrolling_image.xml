@@ -1,8 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.raymond.randomexercise.ui.widgets.ScrollingImageRecyclerView
-    android:id="@+id/recyclerView"
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-</com.raymond.randomexercise.ui.widgets.ScrollingImageRecyclerView>
+    <com.raymond.randomexercise.ui.widgets.ScrollingImageRecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+    <FrameLayout
+        android:background="#80000000"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:text="Lorem Ipsum"
+            android:textSize="48sp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textColor="#fff"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </FrameLayout>
+</FrameLayout>

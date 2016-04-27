@@ -10,10 +10,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 
 import com.facebook.common.util.UriUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.raymond.randomexercise.R;
+import com.raymond.randomexercise.ui.widgets.FixedHeightSimpleDraweeView;
 import com.raymond.randomexercise.ui.widgets.ScrollingImageRecyclerView;
 
 import java.util.ArrayList;
@@ -24,12 +26,13 @@ import java.util.List;
  */
 public class ScrollingImageFragment extends Fragment {
 
+    private static final String TAG = "ScrollingImageFragment";
     ScrollingImageRecyclerView recyclerView;
 
     Runnable scroll = new Runnable() {
         @Override
         public void run() {
-            recyclerView.smoothScrollBy(0, 100);
+            recyclerView.smoothScrollBy(0, 20);
             recyclerView.postDelayed(this, 50);
         }
     };
@@ -52,13 +55,13 @@ public class ScrollingImageFragment extends Fragment {
                 boolean end = linearLayoutManager.findFirstVisibleItemPosition() + linearLayoutManager.getChildCount() >= 1000;
                 Log.d("ScrollingImageFragment", "onScrolled: " + end);
                 if (end) {
-                    linearLayoutManager.scrollToPosition(0);
+//                    linearLayoutManager.scrollToPosition(0);
                 }
             }
         });
 
 
-        recyclerView.post(scroll);
+        recyclerView.postDelayed(scroll, 200);
 
         return v;
     }
@@ -97,7 +100,7 @@ public class ScrollingImageFragment extends Fragment {
 
 
     private static class ImageAdapter extends RecyclerView.Adapter {
-        private static final int REPEAT_MAX = 1000;
+        private static final int REPEAT_MAX = Integer.MAX_VALUE;
 
         List<ImageHolder> imageRes;
         int size;
@@ -123,10 +126,26 @@ public class ScrollingImageFragment extends Fragment {
                 loc = position;
             }
 
-            ImageHolder imageHolder = imageRes.get(loc);
-            ViewGroup.LayoutParams params = vh.simpleDraweeView.getLayoutParams();
-            params.height = imageHolder.height * 2;
-            vh.simpleDraweeView.setLayoutParams(params);
+            final ImageHolder imageHolder = imageRes.get(loc);
+            vh.simpleDraweeView.setMyAspectRatio(imageHolder.height / (imageHolder.width + 0f));
+//            ViewGroup.LayoutParams params = vh.simpleDraweeView.getLayoutParams();
+
+//            if (ViewGroup.LayoutParams.WRAP_CONTENT == params.height) {
+//                vh.simpleDraweeView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+//                    @Override
+//                    public void onGlobalLayout() {
+//                        float ratio = imageHolder.height / (imageHolder.width + 0f);
+//                        ViewGroup.LayoutParams vParams = vh.simpleDraweeView.getLayoutParams();
+//                        vParams.height = (int) (vh.simpleDraweeView.getMeasuredWidth() * ratio);
+//                        Log.d("ScrollingImageFragment", "onGlobalLayout: " + vParams.height);
+//                        vh.simpleDraweeView.setLayoutParams(vParams);
+//                        vh.simpleDraweeView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+//                    }
+//                });
+//            }
+
+
+
             vh.simpleDraweeView.setImageURI(Uri.parse(imageHolder.path));
         }
 
@@ -137,10 +156,10 @@ public class ScrollingImageFragment extends Fragment {
     }
 
     private static class ImageViewHolder extends RecyclerView.ViewHolder {
-        SimpleDraweeView simpleDraweeView;
+        FixedHeightSimpleDraweeView simpleDraweeView;
         public ImageViewHolder(View itemView) {
             super(itemView);
-            simpleDraweeView = (SimpleDraweeView) itemView.findViewById(R.id.image);
+            simpleDraweeView = (FixedHeightSimpleDraweeView) itemView.findViewById(R.id.image);
         }
     }
 
