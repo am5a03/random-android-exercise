@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
+//apply plugin: 'kotlin-android'
 apply plugin: 'me.tatarka.retrolambda'
 
 android {
@@ -38,6 +38,7 @@ ext {
     glideVersion = "3.7.0"
     aspectjVersion = "1.8.6"
     frescoVersion = "0.10.0"
+    constraintLayout = "1.0.0-alpha1"
 }
 
 dependencies {
@@ -47,7 +48,7 @@ dependencies {
     compile "com.android.support:appcompat-v7:${supportLibVersion}"
     compile "com.android.support:recyclerview-v7:${supportLibVersion}"
     compile "com.android.support:design:${supportLibVersion}"
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+//    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
     //RxJava
     compile "io.reactivex:rxandroid:${rxjavaVersion}"
@@ -66,15 +67,19 @@ dependencies {
 
     // AspectJ
     compile "org.aspectj:aspectjrt:${aspectjVersion}"
+
+    // constraint layout
+    compile 'com.android.support.constraint:constraint-layout:' + constraintLayout
+    compile project(path: ':robo')
 }
 buildscript {
-    ext.kotlin_version = '1.0.0'
+    ext.kotlin_version = '1.0.2'
     ext.retrolambda_version = '3.2.5'
     repositories {
         mavenCentral()
     }
     dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+//        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "me.tatarka:gradle-retrolambda:$retrolambda_version"
     }
 }

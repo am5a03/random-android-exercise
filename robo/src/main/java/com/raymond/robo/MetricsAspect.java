@@ -25,6 +25,13 @@ public class MetricsAspect {
     @Around("methodAnnoatedWithMetrics() || constructorWithMetrics()")
     public Object weaveJoinPoint(ProceedingJoinPoint joinPoint) throws Throwable {
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
-        return null;
+        String className = methodSignature.getDeclaringType().getSimpleName();
+        String methodName = methodSignature.getName();
+
+        Object result = joinPoint.proceed();
+
+        MetricsLog.logEvent(className, methodName, "");
+
+        return result;
     }
 }
