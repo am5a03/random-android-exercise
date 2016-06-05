@@ -17,6 +17,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.raymond.randomexercise.R;
 import com.raymond.randomexercise.ui.widgets.FixedHeightSimpleDraweeView;
 import com.raymond.randomexercise.ui.widgets.ScrollingImageRecyclerView;
+import com.raymond.robo.Metrics;
 
 import java.util.ArrayList;
 import java.util.List;

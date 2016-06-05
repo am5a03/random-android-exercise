@@ -10,7 +10,7 @@ public class MetricsLog {
 
     public static void logEvent(String action, String label, String value) {
         Log.d("MetricsLog", "action=" + action
-                + ", label" + label
-                + ", value" + value);
+                + ", label=" + label
+                + ", value=" + value);
     }
 }

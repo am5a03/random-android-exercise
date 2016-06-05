@@ -1,5 +1,7 @@
 package com.raymond.randomexercise.activities;
 
+import android.os.Build;
+import android.provider.Settings;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -8,17 +10,20 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.raymond.randomexercise.R;
 import com.raymond.randomexercise.fragments.ScrollingImageFragment;
+import com.raymond.robo.Metrics;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = "MainActivity";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_simple);
-
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
 

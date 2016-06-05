@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="25dp"
+    android:id="@+id/constraintLayout">
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp"
+        android:id="@+id/textView2"
+        app:layout_constraintLeft_toLeftOf="@+id/constraintLayout"
+        tools:layout_constraintLeft_creator="0"
+        app:layout_constraintTop_toTopOf="@+id/constraintLayout"
+        tools:layout_constraintTop_creator="0" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="32dp"
+        android:id="@+id/textView3"
+        app:layout_constraintLeft_toLeftOf="@+id/constraintLayout"
+        tools:layout_constraintLeft_creator="0"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        android:layout_marginTop="16dp"
+        tools:layout_constraintTop_creator="0" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="310dp"
+        tools:layout_editor_absoluteY="32dp"
+        android:id="@+id/textView4"
+        app:layout_constraintRight_toRightOf="@+id/constraintLayout"
+        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
+        tools:layout_constraintRight_creator="0" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="94dp"
+        tools:layout_editor_absoluteY="0dp"
+        android:id="@+id/textView5"
+        app:layout_constraintTop_toTopOf="@+id/textView2"
+        tools:layout_constraintTop_creator="0" />
+</android.support.constraint.ConstraintLayout>

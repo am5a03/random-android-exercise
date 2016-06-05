@@ -1,7 +1,9 @@
 package com.raymond.randomexercise.activities;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -15,15 +17,25 @@ import android.view.ViewPropertyAnimator;
 import com.raymond.randomexercise.R;
 import com.raymond.randomexercise.example.particle.*;
 import com.raymond.randomexercise.example.photo.ActivityAnimations;
+import com.raymond.robo.Metrics;
 
 /**
  * Created by Raymond on 2016-04-04.
  */
 public class AnimActivity extends AppCompatActivity {
+
+    private static final String TAG = "AnimActivity";
+
+    @Metrics
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_anim);
+
+        Log.d(TAG, "onCreate: " + Build.SERIAL + ", id=" + Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID));
+        Log.d(TAG, "onCreate: " + Build.FINGERPRINT);
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         View v = findViewById(R.id.img);
