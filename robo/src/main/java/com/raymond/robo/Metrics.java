@@ -15,4 +15,9 @@ import java.lang.annotation.Target;
         ElementType.TYPE
 })
 public @interface Metrics {
+    String eventName() default "";
+
+    String eventLabel() default "";
+
+    String eventAction() default "";
 }

@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.ViewPropertyAnimator;
 
 import com.raymond.randomexercise.R;
-import com.raymond.randomexercise.example.particle.*;
 import com.raymond.randomexercise.example.photo.ActivityAnimations;
 import com.raymond.robo.Metrics;
 
@@ -26,7 +25,7 @@ public class AnimActivity extends AppCompatActivity {
 
     private static final String TAG = "AnimActivity";
 
-    @Metrics
+    @Metrics(eventName = "InitAnim", eventLabel = "create", eventAction = "1234")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
